@@ -119,6 +119,7 @@ let
     (loadModule ./services/parcellite.nix { })
     (loadModule ./services/pasystray.nix { })
     (loadModule ./services/polybar.nix { })
+    (loadModule ./services/rambox.nix { })
     (loadModule ./services/random-background.nix { })
     (loadModule ./services/redshift.nix { })
     (loadModule ./services/rsibreak.nix { condition = hostPlatform.isLinux; })
