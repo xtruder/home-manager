@@ -9,7 +9,7 @@ let
   extendedLib = import ../modules/lib/stdlib-extended.nix pkgs.lib;
 
   hmModule = types.submoduleWith {
-    specialArgs = { lib = extendedLib; };
+    specialArgs = { lib = extendedLib; } // cfg.specialArgs;
     modules = [
       ({ name, ... }: {
         imports = import ../modules/modules.nix {
@@ -41,6 +41,12 @@ let
 in {
   options = {
     home-manager = {
+      specialArgs = mkOption {
+        type = types.attrs;
+        default = {};
+        description = "Attribute set of special arguments to pass";
+      };
+
       useUserPackages = mkEnableOption ''
         installation of user packages through the
         <option>users.users.‹name?›.packages</option> option.
