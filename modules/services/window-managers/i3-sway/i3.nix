@@ -17,7 +17,7 @@ let
       inherit (commonOptions)
         fonts window floating focus assigns modifier workspaceLayout
         workspaceAutoBackAndForth keycodebindings colors bars startup gaps menu
-        terminal;
+        terminal defaultOrientation;
 
       keybindings = mkOption {
         type = types.attrsOf (types.nullOr types.str);
@@ -174,6 +174,7 @@ let
       workspace_auto_back_and_forth ${
         if workspaceAutoBackAndForth then "yes" else "no"
       }
+      default_orientation ${defaultOrientation}
 
       client.focused ${colorSetStr colors.focused}
       client.focused_inactive ${colorSetStr colors.focusedInactive}

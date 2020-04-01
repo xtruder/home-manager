@@ -463,6 +463,18 @@ in {
     '';
   };
 
+  defaultOrientation = mkOption {
+    type = types.enum ["horizontal" "vertical" "auto"];
+    default = "auto";
+    example = "horizontal";
+    description = ''
+      New workspaces get a reasonable default orientation, Wide-screen monitors
+      (anything wider than high) get horizontal orientation, rotated monitors
+      (anything higher than wide) get vertical orientation.
+      With this configuration option you can override that behavior.
+    '';
+  };
+
   keycodebindings = mkOption {
     type = types.attrsOf (types.nullOr types.str);
     default = { };
