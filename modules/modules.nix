@@ -158,6 +158,7 @@ let
     (loadModule ./services/spotifyd.nix { condition = hostPlatform.isLinux; })
     (loadModule ./services/sxhkd.nix { condition = hostPlatform.isLinux; })
     (loadModule ./services/syncthing.nix { })
+    (loadModule ./services/swayidle.nix { condition = hostPlatform.isLinux; })
     (loadModule ./services/taffybar.nix { })
     (loadModule ./services/tahoe-lafs.nix { })
     (loadModule ./services/taskwarrior-sync.nix { condition = hostPlatform.isLinux; })
