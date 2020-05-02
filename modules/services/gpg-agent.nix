@@ -10,8 +10,11 @@ let
     GPG_TTY="$(tty)"
     export GPG_TTY
   ''
-  + optionalString cfg.enableSshSupport
-      "${pkgs.gnupg}/bin/gpg-connect-agent updatestartuptty /bye > /dev/null";
+  + optionalString cfg.enableSshSupport ''
+    SSH_AUTH_SOCK="$(${pkgs.gnupg}/bin/gpgconf --list-dirs agent-ssh-socket)"
+    export SSH_AUTH_SOCK
+    ${pkgs.gnupg}/bin/gpg-connect-agent updatestartuptty /bye > /dev/null
+  '';
 
 in
 
@@ -178,11 +181,6 @@ in
         ++
         [ cfg.extraConfig ]
       );
-
-      home.sessionVariables =
-        optionalAttrs cfg.enableSshSupport {
-          SSH_AUTH_SOCK = "$(${pkgs.gnupg}/bin/gpgconf --list-dirs agent-ssh-socket)";
-        };
 
       programs.bash.initExtra = gpgInitStr;
       programs.zsh.initExtra = gpgInitStr;
