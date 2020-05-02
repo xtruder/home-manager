@@ -79,5 +79,16 @@ in {
       "gtk-cursor-theme-size" = cfg.size;
     };
 
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        cursor-theme = cfg.name;
+      };
+    };
+
+    home.file.".icons/default/index.theme".text = ''
+      [icon theme]
+      Inherits=${cfg.name}
+    '';
+
   };
 }
