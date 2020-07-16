@@ -151,6 +151,7 @@ let
     (loadModule ./services/picom.nix { })
     (loadModule ./services/polkit-auth-agent.nix { condition = hostPlatform.isLinux; })
     (loadModule ./services/polybar.nix { })
+    (loadModule ./services/protonvpn-tray.nix { condition = hostPlatform.isLinux; })
     (loadModule ./services/pulseeffects.nix { condition = hostPlatform.isLinux; })
     (loadModule ./services/random-background.nix { })
     (loadModule ./services/redshift.nix { })
