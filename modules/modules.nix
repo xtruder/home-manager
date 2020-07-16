@@ -149,6 +149,7 @@ let
     (loadModule ./services/password-store-sync.nix { condition = hostPlatform.isLinux; })
     (loadModule ./services/pasystray.nix { })
     (loadModule ./services/picom.nix { })
+    (loadModule ./services/polkit-auth-agent.nix { condition = hostPlatform.isLinux; })
     (loadModule ./services/polybar.nix { })
     (loadModule ./services/pulseeffects.nix { condition = hostPlatform.isLinux; })
     (loadModule ./services/random-background.nix { })
