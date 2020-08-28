@@ -20,11 +20,14 @@ let
     "vscodium" = "vscode-oss";
   }.${vscodePname};
 
-  configFilePath =
+  userDir = 
     if pkgs.stdenv.hostPlatform.isDarwin then
-      "Library/Application Support/${configDir}/User/settings.json"
+      "Library/Application Support/${configDir}/User"
     else
-      "${config.xdg.configHome}/${configDir}/User/settings.json";
+      "${config.xdg.configHome}/${configDir}/User";
+
+  configFilePath = "${userDir}/settings.json";
+  keybindingsFilePath = "${userDir}/keybindings.json";
 
   # TODO: On Darwin where are the extensions?
   extensionPath = ".${extensionDir}/extensions";
@@ -59,6 +62,31 @@ in
         '';
       };
 
+      keybindings = mkOption {
+        type = types.listOf (types.submodule {
+          options = {
+
+            key = mkOption {
+              description = "Key or key sequence";
+              type = types.str;
+            };
+
+            command = mkOption {
+              description = "Name of the command to execute.";
+              type = types.str;
+            };
+
+            when = mkOption {
+              description = "Condition when the key is active.";
+              type = types.nullOr types.str;
+              default = null;
+            };
+          };   
+        });
+        description = "List of keybindings.";
+        apply = map (kb: { inherit (kb) key command when; });
+      };
+
       extensions = mkOption {
         type = types.listOf types.package;
         default = [];
@@ -91,6 +119,10 @@ in
             "${configFilePath}" =
               mkIf (cfg.userSettings != {}) {
                 text = builtins.toJSON cfg.userSettings;
+              };
+            ${keybindingsFilePath} =
+              mkIf (cfg.keybindings != []) {
+                text = builtins.toJSON cfg.keybindings;
               };
           }
           toSymlink;
